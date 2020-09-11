@@ -43,7 +43,7 @@ if [ ! -z "$UPLOADTOOL_SUFFIX" ] ; then
     echo ">>> 2"
     RELEASE_NAME="continuous-$UPLOADTOOL_SUFFIX"
     RELEASE_TITLE="Continuous build ($UPLOADTOOL_SUFFIX)"
-    if [ ! -z "$UPLOADTOOL_ISPRERELEASE" ] ; then
+    if [ ! -z "${UPLOADTOOL_ISPRERELEASE+x}" ] ; then
       echo ">>> 3"
       is_prerelease="false"
     else
@@ -60,7 +60,7 @@ else
       # Do not use "latest" as it is reserved by GitHub
       RELEASE_NAME="continuous"
       RELEASE_TITLE="Continuous build"
-      if [ ! -z "$UPLOADTOOL_ISPRERELEASE" ] ; then
+      if [ ! -z "${UPLOADTOOL_ISPRERELEASE+x}" ] ; then
         echo ">>> 6"
         is_prerelease="false"
       else
