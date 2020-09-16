@@ -43,14 +43,13 @@ if [ ! -z "$UPLOADTOOL_SUFFIX" ] ; then
     echo ">>> 2"
     RELEASE_NAME="continuous-$UPLOADTOOL_SUFFIX"
     RELEASE_TITLE="Continuous build ($UPLOADTOOL_SUFFIX)"
-    if [ ! -z "${UPLOADTOOL_ISPRERELEASE+x}" ] ; then
-      echo ">>> 3"
-      is_prerelease="false"
-    else
-      echo ">>> 4"
-      is_prerelease="$UPLOADTOOL_ISPRERELEASE"
-    fi
-
+	if [ "$UPLOADTOOL_ISPRERELEASE" = "true" ] ; then
+	  echo ">>> 3"
+	  is_prerelease="true"
+	else
+	  echo ">>> 4"
+	  is_prerelease="false"
+	fi
   fi
 else
   # ,, is a bash-ism to convert variable to lower case
@@ -60,13 +59,13 @@ else
       # Do not use "latest" as it is reserved by GitHub
       RELEASE_NAME="continuous"
       RELEASE_TITLE="Continuous build"
-      if [ ! -z "${UPLOADTOOL_ISPRERELEASE+x}" ] ; then
-        echo ">>> 6"
-        is_prerelease="false"
-      else
-        echo ">>> 7"
-        is_prerelease="$UPLOADTOOL_ISPRERELEASE"
-      fi
+	  if [ "$UPLOADTOOL_ISPRERELEASE" = "true" ] ; then
+	    echo ">>> 6"
+		is_prerelease="true"
+	  else
+	    echo ">>> 7"
+		is_prerelease="false"
+	  fi
       ;;
     *-alpha*|*-beta*|*-rc*)
       echo ">>> 8"
