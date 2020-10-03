@@ -31,23 +31,17 @@ fi
 # builds for other branches.
 # If this build was triggered by a tag, call the result a Release
 
-  echo "Initial is PreRelease $UPLOADTOOL_ISPRERELEASE"
-
 if [ ! -z "$UPLOADTOOL_SUFFIX" ] ; then
   if [ "$UPLOADTOOL_SUFFIX" = "$TRAVIS_TAG" ] ; then
-    echo ">>> 1"
     RELEASE_NAME="$TRAVIS_TAG"
     RELEASE_TITLE="Release build ($TRAVIS_TAG)"
     is_prerelease="false"
   else
-    echo ">>> 2"
     RELEASE_NAME="continuous-$UPLOADTOOL_SUFFIX"
     RELEASE_TITLE="Continuous build ($UPLOADTOOL_SUFFIX)"
 	if [ "$UPLOADTOOL_ISPRERELEASE" = "true" ] ; then
-	  echo ">>> 3"
 	  is_prerelease="true"
 	else
-	  echo ">>> 4"
 	  is_prerelease="false"
 	fi
   fi
@@ -55,26 +49,21 @@ else
   # ,, is a bash-ism to convert variable to lower case
   case $(tr '[:upper:]' '[:lower:]' <<< "$TRAVIS_TAG") in
     "")
-      echo ">>> 5"
       # Do not use "latest" as it is reserved by GitHub
       RELEASE_NAME="continuous"
       RELEASE_TITLE="Continuous build"
 	  if [ "$UPLOADTOOL_ISPRERELEASE" = "true" ] ; then
-	    echo ">>> 6"
 		is_prerelease="true"
 	  else
-	    echo ">>> 7"
 		is_prerelease="false"
 	  fi
       ;;
     *-alpha*|*-beta*|*-rc*)
-      echo ">>> 8"
       RELEASE_NAME="$TRAVIS_TAG"
       RELEASE_TITLE="Pre-release build ($TRAVIS_TAG)"
       is_prerelease="true"
       ;;
     *)
-      echo ">>> 9"
       RELEASE_NAME="$TRAVIS_TAG"
       RELEASE_TITLE="Release build ($TRAVIS_TAG)"
       is_prerelease="false"
@@ -89,8 +78,6 @@ if [ "$ARTIFACTORY_BASE_URL" != "" ]; then
     echo "Please set ARTIFACTORY_API_KEY"
     exit 1
   fi
-  
-  echo "Final is PreRelease $is_prerelease"
 
   files="$@"
 
